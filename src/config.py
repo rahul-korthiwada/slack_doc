@@ -185,8 +185,9 @@ product["credit"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID]
 product["upi"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID]
 
 
-tags = [identity_objects[CARD]]
-
+tags = []
+for tag in product["euler"]:
+    tags.append(identity_objects[tag])
 # f = open("config.json","r")
 # config = f.read()
 # config = json.load(config)
