@@ -1,4 +1,3 @@
-
 import requests
 import json
 import os
@@ -6,6 +5,7 @@ import os
 def post_request_to_chat_gpt(parsedData):
     api_key = os.getenv("OPEN_API_KEY")
     api_endpoint = 'https://api.openai.com/v1/chat/completions'
+    model_name = 'gpt-3.5-turbo'
 
 
     headers = {
@@ -26,6 +26,17 @@ def post_request_to_chat_gpt(parsedData):
 
     if response.status_code == 200:
         result = response.json()
-        return (result['choices'][0]['message']['content'])
+        title_data = {
+            'model': 'gpt-3.5-turbo',
+            'messages': [
+                {'role': 'user', 'content': 'Can you suggest a title for the above discussion'},
+                # {'role':'user','content':'Hello'}
+            ],
+        }
+
+        title_response = requests.post(api_endpoint, headers=headers, json=title_data)
+        if title_response.status_code == 200:
+            title_result = title_response.json()
+            return (result['choices'][0]['message']['content'] , title_result['choices'][0]['message']['content'])
     else:
         print(f"Error: {response.status_code}, {response.text}")

@@ -1,6 +1,5 @@
 import os
 from slack_sdk import WebClient
-import json
 from validation import mask_data
 
 
@@ -20,7 +19,7 @@ def scrape_data_from_slack(channel,ts):
         }
         parsedData.append(messageInfo)
 
-    print(json.dumps(parsedData))
+    # print(json.dumps(parsedData))
     return parsedData
 
 
