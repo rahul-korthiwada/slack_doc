@@ -22,4 +22,17 @@ def scrape_data_from_slack(channel,ts):
     # print(json.dumps(parsedData))
     return parsedData
 
+def push_file(channel,ts,message,file_path):
+    client = WebClient(token=os.getenv("SLACK_BOT_TOKEN"))
+    try:
+        response = client.files_upload_v2(
+            channels=channel,
+            thread_ts=ts,
+            file=file_path,
+            initial_comment=message
+        )
+        print("File uploaded successfully")
+    except Exception as e:
+        print(f"Failed to upload file. Error: {e.response['error']}")
+
 
