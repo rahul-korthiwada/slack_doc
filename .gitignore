@@ -2,3 +2,11 @@ venv/
 *.pyc
 docs/*.md
 docs/
+*.csv
+response_json/
+gpt_responses/
+gpt_responses_new/
+indexes/
+poc_data/
+poc_chroma_db/
+*.json
