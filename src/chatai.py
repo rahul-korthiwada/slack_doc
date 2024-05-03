@@ -1,6 +1,64 @@
 import requests
 import json
 import os
+from dotenv import load_dotenv
+from openai import AzureOpenAI
+
+
+load_dotenv("../.env",override=True)
+
+class LLM:
+    def __init__(self) -> None:
+        self.deployment_name = os.getenv("AZURE_GPT_DEPLOYMENT_NAME")
+        self.openai_api_base = os.getenv("AZURE_OAI_BASE_URL")
+        self.openai_api_key = os.getenv('AZURE_OAI_API_KEY')
+        self.openai_api_version = os.getenv('AZURE_OAI_API_VERSION')
+
+        self.client = AzureOpenAI(
+            azure_endpoint= self.openai_api_base,
+            azure_deployment= self.deployment_name,
+            api_version= self.openai_api_version,
+            api_key= self.openai_api_key
+        )
+
+    def post_request_to_model(self,data):
+        messages = [
+            {'role': 'user', 'content': json.dumps(data)},
+            {'role': 'user', "content": '''Answer the following questions for the above slack conversation.
+                Pick the context from the appropriate messages and answer the following questions. Provide answer in valid json format. supress rows which are not valid json
+                What is the merchant id being discussed ? use merchant_id as key
+                What are the errors encountered ? Use minimal words. use errors as key
+                give a category to the issue discussed based on single main context. use llm_category as key
+                What are the exact error messages discussed in the conversation ? Answer in few words. Use exact_error as key
+                What are the formatted keywords or sentences. Exclude links, mentions, slack users and channels. use thread_meta_data as key
+                Extract order id from the conversation.
+                Extract session id from the conversation.
+                Can you provide a detailed summary for the above slack conversation. use llm_summary as key. Pick the context from the appropriate messages and share summary in the following format:
+                    Summary of the problem being discussed on the thread
+                    What caused the issue/problem?
+                    Who got affected and what was the impact?
+                    Actual session information where the problem happened?
+                    What were the all the checks discussed(or suggested) on the thread to understand the problem better and root cause the issue?
+                    What are the final action steps taken to resolve the issue?
+                    What are the steps taken to resolve this issue with specific info on each step.
+                    What are the steps taken for better visibility and debugging
+                '''}
+            ]
+        response = self.client.chat.completions.create(
+            model = self.deployment_name,
+            messages = messages,
+        )
+        return (response.model_dump()["choices"][0]["message"]["content"])
+
+    def to_json(self,response):
+        start_index = response.find('```json') + len('```json')
+        end_index = response.find('```', start_index)
+        json_string = response[start_index:end_index].strip()
+        try:
+            json_data = json.loads(json_string)
+            return json_data
+        except Exception as ex:
+            return {}
 
 def post_request_to_chat_gpt(parsedData):
     api_key = os.getenv("OPEN_API_KEY")

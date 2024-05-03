@@ -13,7 +13,7 @@ card_patterns = [ r'^3[47]'
                 , r'^5[1-5]'
                 , r'^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6220|504834|504817|504645)\d*'
                 ]
-                
+
 # TESTED
 def check_card(line,command):
     card_nos = re.finditer("\d{12,19}", line)
@@ -23,15 +23,15 @@ def check_card(line,command):
     i = 0
     matched_pattern = ""
     for card in card_nos:
-        print(card)
+        # print("card", card)
         if verify(card.group()):
             for pattern in card_patterns:
                 x = re.match(pattern,card.group())
                 if x:
                     matched_pattern = pattern
                     spanner = card
-                    print(spanner.span())
-                    print(line[spanner.span()[1]-1])
+                    # print("spanner :: ", spanner.span())
+                    # print("after spanner :: ", line[spanner.span()[1]-1])
                     found = True
                     # if len(line) <= spanner.span()[1] or not line[spanner.span()[1]].isalnum():
                     #     found = True
@@ -42,7 +42,7 @@ def check_card(line,command):
                     #             break
                     #     else:
                     #         break
-    print(found)
+    # print("isFound :: ", found)
     if found:
         line = line.replace(spanner.group(),"###")
     return "CARD", value, line, matched_pattern
@@ -104,6 +104,6 @@ def check_anomaly(line,command,tags):
     return ans,line
 
 def mask_data(line,command):
-    line = eliminate(line,elimination_chars)
+    # line = eliminate(line,elimination_chars)
     result,maskedLine = check_anomaly(line,command,tags)
     return result,maskedLine
