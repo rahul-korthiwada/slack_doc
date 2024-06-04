@@ -1,5 +1,5 @@
 
-from slack import scrape_data_from_slack,push_file
+from slack_scraper import scrape_data_from_slack,push_file
 from openai import post_request_to_chat_gpt
 
 channel_id = "C023M6R5U1W"

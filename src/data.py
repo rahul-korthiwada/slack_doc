@@ -6,7 +6,7 @@ import argparse
 import multiprocessing as mp
 import pandas as pd
 import re
-from slack import scrape_data_from_slack
+from slack_scraper import scrape_data_from_slack
 from tqdm import tqdm
 import sys
 from slack_sdk import WebClient
