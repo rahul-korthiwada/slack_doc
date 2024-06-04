@@ -29,7 +29,7 @@ setup(
         , "idna==3.6"
         , "luhn==0.2.0"
         , "oauthlib==3.2.2"
-        , "openai==1.3.8"
+        , "openai==1.13.3"
         , "protobuf==4.25.1"
         , "pyasn1==0.5.1"
         , "pyasn1-modules==0.3.0"
