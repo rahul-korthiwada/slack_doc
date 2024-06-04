@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(os.getcwd())
 from slack_sdk import WebClient
 from validation import mask_data
 from utils import extract_slack_urls, extract_slack_details
