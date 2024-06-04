@@ -10,3 +10,6 @@ indexes/
 poc_data/
 poc_chroma_db/
 *.json
+*.zip
+*/*.md
+*/*.json
