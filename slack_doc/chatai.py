@@ -84,7 +84,6 @@ def post_request_to_chat_gpt(parsedData):
                                             6. What are the final action steps taken to resolve the issue?
                                             7. What are the steps taken to resolve this issue with specific info on each step.
                                             8. What are the steps taken for better visibility and debugging.'''},
-            # {'role':'user','content':'Hello'}
         ],
     }
     print("request_sent")
@@ -97,7 +96,6 @@ def post_request_to_chat_gpt(parsedData):
             'model': 'gpt-3.5-turbo',
             'messages': [
                 {'role': 'user', 'content': 'Can you suggest a title for the above discussion'},
-                # {'role':'user','content':'Hello'}
             ],
         }
 

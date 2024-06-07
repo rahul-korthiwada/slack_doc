@@ -1,9 +1,9 @@
 import os
 import sys
-sys.path.append(os.getcwd())
+# sys.path.append(os.getcwd())
 from slack_sdk import WebClient
-from validation import mask_data
-from utils import extract_slack_urls, extract_slack_details
+from slack_doc.validation import mask_data
+from slack_doc.utils import extract_slack_urls, extract_slack_details
 from dotenv import load_dotenv
 import time
 from slack_sdk.errors import SlackApiError
@@ -31,15 +31,7 @@ def scrape_child_data_from_slack(slack_url):
             if max_retries == 1:
                 return []
             continue
-
-    # try:
-    #     response = client.conversations_replies(channel=channel, ts=ts)
-    # except Exception as e:
-    #     print(f"Failed to get child thread info. Error: {e.response}")
-    #     return []
-    # messages = response["messages"]
     messages = [msg for msg in response['messages'] if 'subtype' not in msg]
-    # print(messages)
 
     parsedData = []
     for message in messages:
@@ -71,8 +63,6 @@ def scrape_data_from_slack(channel,ts):
                 return {"data":[],"additional_data":[]}
             continue
 
-    # response = client.conversations_replies(channel=channel, ts=ts)
-    # messages = response["messages"]
     messages = [msg for msg in response['messages'] if response["ok"] and "subtype" not in msg]
 
     childSlackUrls = set()
@@ -91,11 +81,11 @@ def scrape_data_from_slack(channel,ts):
             "reactions" : message.get('reactions')
         }
         parsedData.append(messageInfo)
-    # print(childSlackUrls)
+
     additionalData = []
     for slackUrl in  childSlackUrls:
         additionalData.append(scrape_child_data_from_slack(slackUrl))
-    # print(json.dumps(parsedData))
+
     return {
         'data' : parsedData,
         'additional_data' : list(itertools.chain.from_iterable(additionalData))

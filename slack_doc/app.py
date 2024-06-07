@@ -45,7 +45,7 @@ index = VectorStoreIndex.from_vector_store(
     vector_store, storage_context=storage_context
 )
 
-chat_engine_2 = index.as_chat_engine(
+chat_engine = index.as_chat_engine(
     context_prompt=(
         "You are a chatbot, able to have normal interactions, as well as "
         " provide the cause of issues based on the given context."
@@ -57,11 +57,6 @@ chat_engine_2 = index.as_chat_engine(
     chat_mode="condense_plus_context", streaming=True,
     similarity_top_k=5
 )
-# response_stream = chat_engine_2.stream_chat("why am i facing internal server error for orders")
-# response_stream.print_response_stream()
-
-# # create a query engine and query
-# query_engine = index.as_query_engine()
 
 st.title("Debug Assistant")
 
@@ -78,7 +73,7 @@ for message in st.session_state.messages:
 if prompt := st.chat_input("Ask Anything"):
     st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
-    response = chat_engine_2.stream_chat(prompt)
+    response = chat_engine.stream_chat(prompt)
     with st.chat_message("assistant"):
         st.write_stream(response.response_gen)
     st.session_state.messages.append({"role": "assistant", "content": response})
