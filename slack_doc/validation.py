@@ -1,8 +1,8 @@
 import re
 from luhn import *
 import json
-from slack_doc.utils import *
-from slack_doc.config import *
+from utils import *
+from config import *
 card_patterns = [ r'^3[47]'
                 , r'^30[0-5]'
                 , r'^3([689]|09)'
