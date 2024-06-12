@@ -3,8 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 from openai import AzureOpenAI
-from time import time,sleep
-import random
+
 
 load_dotenv("../.env",override=True)
 
@@ -23,8 +22,6 @@ class LLM:
         )
 
     def post_request_to_model(self,data):
-        max_retries = 5
-        retry_delay = 20
         messages = [
             {'role': 'user', 'content': json.dumps(data)},
             {'role': 'user', "content":
@@ -68,19 +65,11 @@ class LLM:
                 '''
                 }
             ]
-        
-
-        for attempt in range(max_retries):
-            try:
-                response = self.client.chat.completions.create(
-                    model = self.deployment_name,
-                    messages = messages)
-                return (response.model_dump()["choices"][0]["message"]["content"])
-            except Exception as ex:
-                print(f"Exception :: {ex}")
-                sleep(retry_delay)
-                retry_delay *= 2
-                retry_delay += random.uniform(0, 1)
+        response = self.client.chat.completions.create(
+            model = self.deployment_name,
+            messages = messages,
+        )
+        return (response.model_dump()["choices"][0]["message"]["content"])
 
     def to_json(self,response):
         start_index = response.find('```json') + len('```json')

@@ -249,7 +249,7 @@ def llm_res_to_csv(channel_id):
 
 def main():
     parser = argparse.ArgumentParser()
-    num_workers = mp.cpu_count()*2
+    num_workers = mp.cpu_count()
 
     # Add arguments
     parser.add_argument("--env-path", help="ENV file path", required=True)
