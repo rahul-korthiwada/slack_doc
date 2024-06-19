@@ -62,6 +62,16 @@ class LLM:
                         What are the final action steps taken to resolve the issue?
                         What are the steps taken to resolve this issue with specific info on each step.
                         What are the steps taken for better visibility and debugging
+
+                    Answer the following questions to accurately analyze and classify issues/questions related to a payment application discussed in the conversation. Your task is to carefully examine the user's input and provide a structured JSON output with relevant information to aid in classification and routing the issue to the appropriate team. Use tags as key.
+                        The JSON output should include the following fields. All the values should be list of strings: 
+                        1. errors: A list of any errors, exceptions, or problems mentioned by the user in their input.
+                        2. keywords: A list of important keywords, entities, product/feature names, and technical terms identified in the user's input.
+                        3. technical_details: A list of important technical details mentioned by the user, such as browser version, operating system, etc.
+                        4. intent: A detailed description of the user's intent behind the input (e.g., reporting an issue, seeking information, requesting a feature).
+                        5. categories: A list of relevant categories or topics that the user's input belongs to. The categories should be specific to the payment domain
+                        Ensure that the JSON output is well-structured and follows the correct format. If the user's input is ambiguous or lacks sufficient context, indicate that in the JSON output and politely ask for clarification or additional details.
+                        Remember, the goal is to provide a comprehensive JSON output that accurately captures the user's issue, relevant details, and potential categories, aiding in efficient classification and routing within the payment application domain.
                 '''
                 }
             ]
