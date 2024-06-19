@@ -1,6 +1,6 @@
 import json
 from urllib.parse import unquote_plus
-from config import *
+from slack_doc.config import *
 #from .validation import *
 import re
 import gzip
