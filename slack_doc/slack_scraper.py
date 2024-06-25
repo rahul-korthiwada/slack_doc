@@ -46,7 +46,7 @@ def scrape_child_data_from_slack(slack_url):
             "user" : user,
             "reactions" : message.get('reactions')
         }
-    parsedData.append(messageInfo)
+        parsedData.append(messageInfo)
     return parsedData
 
 def scrape_data_from_slack(channel,ts):
