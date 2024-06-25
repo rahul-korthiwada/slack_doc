@@ -270,7 +270,8 @@ def main():
             json_dir = f"{os.getcwd()}/responses_v5/{channel}"
             for dir in [slack_data_dir,json_dir]:
                 create_dir_if_missing(dir)
-            thread_ts = slack.fetch_slack_thread_ids(channel,[])
+            thread_ids = slack.fetch_slack_thread_ids(channel,[])
+            thread_ts = set(thread_ids)
             print(f"Done fetching slack thread ids for channel : {channel}")
             print(f"num of threads :: {len(thread_ts)}")
             with mp.Pool(num_workers) as pool:
