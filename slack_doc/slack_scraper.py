@@ -34,6 +34,7 @@ def scrape_child_data_from_slack(slack_url):
     messages = [msg for msg in response['messages'] if 'subtype' not in msg]
 
     parsedData = []
+    base_path = "https://juspay.slack.com/archives"
     for message in messages:
         result, masked_text = mask_data(message['text'],"mask")
         user = ""
@@ -44,7 +45,8 @@ def scrape_child_data_from_slack(slack_url):
         messageInfo = {
             "message" : masked_text,
             "user" : user,
-            "reactions" : message.get('reactions')
+            "reactions" : message.get('reactions'),
+            "message_link": f"{base_path}/{channel}/p{message.get('ts','').replace('.','')}?thread_ts={ts}&cid={channel}"
         }
         parsedData.append(messageInfo)
     return parsedData
@@ -67,6 +69,7 @@ def scrape_data_from_slack(channel,ts):
 
     childSlackUrls = set()
     parsedData = []
+    base_path = "https://juspay.slack.com/archives"
     for message in messages:
         result, masked_text = mask_data(message['text'],"mask")
         childSlackUrls = childSlackUrls.union(set(extract_slack_urls(message['text'])))
@@ -78,7 +81,8 @@ def scrape_data_from_slack(channel,ts):
         messageInfo = {
             "message" : masked_text,
             "user" : user,
-            "reactions" : message.get('reactions')
+            "reactions" : message.get('reactions'),
+            "message_link": f"{base_path}/{channel}/p{message.get('ts','').replace('.','')}?thread_ts={ts}&cid={channel}"
         }
         parsedData.append(messageInfo)
 
