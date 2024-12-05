@@ -16,7 +16,7 @@ card_patterns = [ r'^3[47]'
 
 # TESTED
 def check_card(line,command):
-    card_nos = re.finditer("\d{12,19}", line)
+    card_nos = re.finditer(r"\d{12,19}", line)
     found = False
     spanner = None
     value = ""
