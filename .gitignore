@@ -13,3 +13,4 @@ poc_chroma_db/
 *.zip
 */*.md
 */*.json
+.slack_venv

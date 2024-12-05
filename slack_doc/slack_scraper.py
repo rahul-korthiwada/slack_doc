@@ -1,19 +1,15 @@
 import os
-import sys
-# sys.path.append(os.getcwd())
-from slack_sdk import WebClient
 from slack_doc.validation import mask_data
 from slack_doc.utils import extract_slack_urls, extract_slack_details
-from dotenv import load_dotenv
 import time
 from slack_sdk.errors import SlackApiError
 import itertools
+from utils import init_slack_client
 
-load_dotenv("../.env",override=True)
+client = init_slack_client()
 
 def scrape_child_data_from_slack(slack_url):
     max_retries = 5
-    client = WebClient(token=os.getenv("SLACK_API_TOKEN"))
     slack_details = extract_slack_details(slack_url)
     if(len(slack_details) <= 0):
         return []
@@ -53,7 +49,6 @@ def scrape_child_data_from_slack(slack_url):
 
 def scrape_data_from_slack(channel,ts):
     max_retries = 5
-    client = WebClient(token=os.getenv("SLACK_API_TOKEN"))
     while max_retries >= 0:
         try:
             response = client.conversations_replies(channel=channel, ts=ts)
@@ -97,7 +92,6 @@ def scrape_data_from_slack(channel,ts):
 
 
 def push_file(channel,ts,message,file_content, slack_thread_id):
-    client = WebClient(token=os.getenv("SLACK_API_TOKEN"))
     try:
         response = client.files_upload_v2(
             channels="C06BS7J3X6Y",
