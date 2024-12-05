@@ -1,10 +1,9 @@
 import os
 from slack_doc.validation import mask_data
-from slack_doc.utils import extract_slack_urls, extract_slack_details
+from slack_doc.utils import extract_slack_urls, extract_slack_details, init_slack_client
 import time
 from slack_sdk.errors import SlackApiError
 import itertools
-from utils import init_slack_client
 
 client = init_slack_client()
 
