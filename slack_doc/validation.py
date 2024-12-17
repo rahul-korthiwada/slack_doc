@@ -44,7 +44,7 @@ def check_card(line,command):
                     #         break
     # print("isFound :: ", found)
     if found:
-        line = line.replace(spanner.group(),"###")
+        line = line.replace(spanner.group(),"<MASKED>")
     return "CARD", value, line, matched_pattern
     # if found:
     #     accurate, value = distance(possible_key_dict["card"],line,spanner.span()[0])
@@ -55,7 +55,7 @@ def check_card(line,command):
     #             # return "", "", line, ""
     #         if command == "mask":
     #             # print("masked: "+line)
-    #             line = line.replace(spanner.group(),"###")
+    #             line = line.replace(spanner.group(),"<MASKED>")
     #         return "CARD", value, line, matched_pattern
     #     else:
     #         return "", "", line, ""
@@ -78,7 +78,7 @@ def check_custom(regex,tag,key_value_list,inverse_key_value_list,line,command):
                 #     return "", "", line, ""
                 if command == "mask":
                     # print("masked: "+line)
-                    line = line.replace(item.group(),"###")
+                    line = line.replace(item.group(),"<MASKED>")
                 break
         if i>0:
             return tag,value,line, ""
