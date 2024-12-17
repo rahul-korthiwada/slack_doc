@@ -13,21 +13,19 @@ def distance(keylist,line,position):
     # print(keylist)
     for item in keylist:
         #index = line.casefold().find(item)
-        index = re.finditer(item,line.casefold())
-        # print(item,index)
+        # index = re.finditer(item,line.casefold())
+        index = list(re.finditer(item.casefold(),line.casefold()))
+        if len(index) < 1:
+            index = re.finditer(item,line)
 
         for i in index:
+            # Check if keyword is in spanning distance
             if position-i.span()[1] < spanning_distance and position-i.span()[1] >= 0:
-                # print(item)
-                # print("spanning_distance")
-                # print(position-i.span()[1] < spanning_distance)
-                # for checking if the spanning distance is less
+                # Check if the next character to keyword is some alphanum
                 if not ((line.casefold()[i.span()[1]].isalnum()) or line.casefold()[i.span()[1]] == '_'):
-                    # print(line.casefold()[i.span()[1]]) if the next character to keyword is some alphanum
                     if i.span()[0]>0:
+                        # Check if previous character to keyword is some alphanum
                         if not (line.casefold()[i.span()[0]-1].isalnum() or line.casefold()[i.span()[0]-1] == '_'):
-                            # print(line.casefold()[i.span()[0]-1]) if the previous character is some alphanum
-                            # print(item)
                             return True, item
                     else:
                         return True, item

@@ -21,6 +21,11 @@ PUBLIC_TOKEN = "public_token"
 SECRET = "secret"
 AUTHORIZATION_KEY = "authorization_key"
 
+# For Mail Data Masking
+COOKIE = "cookie"
+SSO_TOKEN = "sso_token"
+KEY = "key"
+
 lambda_version = "22"
 
 spanning_distance = 15
@@ -43,6 +48,11 @@ possible_key_dict["refresh_token"] = ["refresh_token","refreshtoken"]
 possible_key_dict["public_token"] = ["public_token","publictoken"]
 possible_key_dict["secret"] = ["razorpaywebhookssecret","secret"]
 possible_key_dict["authorization_key"] = ["authorization"]
+
+# For Mail Data Masking
+possible_key_dict["cookie"] = ["cookie","session"]
+possible_key_dict["sso_token"] = ["sso_token","sso"]
+possible_key_dict["key"] = ["Key","merchant_key","Merchant Key", "apikey","api.key","api-key","user_key","encryptionKey","sessionkey","token.key","access-key","auth_key","X-API-key","Proxy-key","userAccessKey","app.key","secret-key","service.key","data_key","backup-key","tenant-key"]
 
 inverse_key_dict = dict()
 inverse_key_dict["card"] = ["order_id"]
@@ -176,9 +186,31 @@ identity_objects[AUTHORIZATION_KEY]["tag"] = AUTHORIZATION_KEY
 identity_objects[AUTHORIZATION_KEY]["key_value_list"] = possible_key_dict[AUTHORIZATION_KEY]
 identity_objects[AUTHORIZATION_KEY]["inverse_key_list"] = inverse_key_dict[CARD]
 
+# For Mail Data Masking
+identity_objects[COOKIE] = dict()
+identity_objects[COOKIE]['regex'] = r"[a-zA-Z0-9+/=_-]+"
+identity_objects[COOKIE]["tag"] = COOKIE
+identity_objects[COOKIE]["key_value_list"] = possible_key_dict[COOKIE]
+identity_objects[COOKIE]["inverse_key_list"] = inverse_key_dict[CARD]
+
+
+identity_objects[SSO_TOKEN] = dict()
+identity_objects[SSO_TOKEN]['regex'] = r"[A-Za-z0-9_-]{20,}"
+identity_objects[SSO_TOKEN]["tag"] = SSO_TOKEN
+identity_objects[SSO_TOKEN]["key_value_list"] = possible_key_dict[SSO_TOKEN]
+identity_objects[SSO_TOKEN]["inverse_key_list"] = inverse_key_dict[CARD]
+
+
+identity_objects[KEY] = dict()
+identity_objects[KEY]['regex'] = r"[A-Za-z0-9]{32}" #r"([\s*:\s*])[A-Za-z0-9_\-]{32,}" # \s*:\s*
+identity_objects[KEY]["tag"] = KEY
+identity_objects[KEY]["key_value_list"] = possible_key_dict[KEY]
+identity_objects[KEY]["inverse_key_list"] = inverse_key_dict[CARD]
+
 
 product = dict()
-product["euler"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID,ACCESS_TOKEN,REFRESH_TOKEN,PUBLIC_TOKEN,SECRET,AUTHORIZATION_KEY]
+# product["euler"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID,ACCESS_TOKEN,REFRESH_TOKEN,PUBLIC_TOKEN,SECRET,AUTHORIZATION_KEY]
+product["euler"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID,ACCESS_TOKEN,REFRESH_TOKEN,PUBLIC_TOKEN,SECRET,AUTHORIZATION_KEY,COOKIE,SSO_TOKEN,KEY]
 product["morpheus"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID]
 product["sdk"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID]
 product["credit"] = [EXPIRY_YEAR,EXPIRY_MONTH,MOBILE,EMAIL,CARD,PAN,VPA,CVV,UID]
