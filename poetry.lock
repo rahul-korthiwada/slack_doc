@@ -1070,7 +1070,10 @@ h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
+[extras]
+data-masker = ["luhn"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0ec6f0ed8c36111de1a5e828125610feeaf2f2a9a84b647171f7281df8c36037"
+content-hash = "7686ccbee7f5f7b2d6567fc3125efc2229fcab96a4cc78f5cfdfd793867be1f1"

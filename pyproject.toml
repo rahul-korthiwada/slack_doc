@@ -22,10 +22,11 @@ slack-sdk = "^3.33.5"
 openai = ">=1.55.3"
 luhn = "^0.2.0"
 
-[tool.poetry.group.data-masker.dependencies]
-python = "^3.11"
-requests = "^2.32.3"
-luhn = "^0.2.0"
+[tool.poetry.extras]
+data-masker = [
+    "requests",
+    "luhn"
+]
 
 [build-system]
 requires = ["poetry-core"]
